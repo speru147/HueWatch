@@ -26,7 +26,26 @@ while True:
     # Black pixels represent everything else
     maskedFrame = cv2.inRange(hsvFrame, lowerLimit, upperLimit)
 
-    cv2.imshow('Webcam View', maskedFrame)
+    # Find contours in the binary mask
+    contours, hierarchy = cv2.findContours(maskedFrame, cv2.RETR_TREE, cv2.CHAIN_APPROX_SIMPLE)
+    
+    # Filter contours based on minimum area to reduce noise
+    valid_contours = [cnt for cnt in contours if cv2.contourArea(cnt) > 1000]
+
+    if valid_contours:
+        #Documentation: x1, y1, w, h = cv2.boundingRect(cnt)
+        # Finding extreme points among all contours
+        x_min = min([cv2.boundingRect(cnt)[0] for cnt in valid_contours])
+        y_min = min([cv2.boundingRect(cnt)[1] for cnt in valid_contours])
+
+        x_max = max([cv2.boundingRect(cnt)[0] + cv2.boundingRect(cnt)[2] for cnt in valid_contours])
+        y_max = max([cv2.boundingRect(cnt)[1] + cv2.boundingRect(cnt)[3] for cnt in valid_contours])
+        
+        # Drawing one rectangle around all detected objects
+        cv2.rectangle(frame, (x_min, y_min), (x_max, y_max), (0, 255, 0), 8)
+
+
+    cv2.imshow('Webcam View', frame)
 
     # If 'q' is pressed exit program
     if cv2.waitKey(40) & 0xFF == ord('q'):
