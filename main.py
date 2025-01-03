@@ -24,7 +24,15 @@ while True:
     # Created a binary mask where:
     # White pixels represent areas within the target color range
     # Black pixels represent everything else
-    maskedFrame = cv2.inRange(hsvFrame, lowerLimit, upperLimit)
+    if color != 'red':
+        # binary mask 
+        maskedFrame = cv2.inRange(hsvFrame, lowerLimit, upperLimit)
+    else:
+        # binary mask 
+        mask1 = cv2.inRange(hsvFrame, lowerLimit[0], lowerLimit[1])
+        mask2 = cv2.inRange(hsvFrame, upperLimit[0], upperLimit[1])
+        maskedFrame = cv2.bitwise_or(mask1, mask2)
+
 
     # Find contours in the binary mask
     contours, hierarchy = cv2.findContours(maskedFrame, cv2.RETR_TREE, cv2.CHAIN_APPROX_SIMPLE)
@@ -33,7 +41,7 @@ while True:
     valid_contours = [cnt for cnt in contours if cv2.contourArea(cnt) > 1000]
 
     if valid_contours:
-        #Documentation: x1, y1, w, h = cv2.boundingRect(cnt)
+        # Documentation: x1, y1, w, h = cv2.boundingRect(cnt)
         # Finding extreme points among all contours
         x_min = min([cv2.boundingRect(cnt)[0] for cnt in valid_contours])
         y_min = min([cv2.boundingRect(cnt)[1] for cnt in valid_contours])
