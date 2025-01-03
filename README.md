@@ -28,6 +28,5 @@ The project consists of:
 
 ## Acknowldgements
 - Built with OpenCV
-- Part of my learning journey in computer vision and Python development
 - Project created to understand real-time color detection and image processing fundamentals
 - Inspired by computer vision applications in real-time color tracking
