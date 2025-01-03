@@ -18,13 +18,13 @@ pip install -r requirements.txt
 - Enter the color you want to detect when prompted on command-line (e.g., "blue", "red", "green")
 - A window will open showing your webcam feed with bounding boxes around detected colors
 - Press 'q' to quit the program
-- 
+  
 ## File Structure
-HueWatch/
-├── main.py          # Main script for color detection
-├── helper.py        # Helper functions for color range calculation
-├── requirements.txt # Required packages
-└── README.md       # Project documentation
+The project consists of:
+- `main.py`: Core script handling webcam input and color detection
+- `helper.py`: Contains helper functions for HSV color range calculations
+- `requirements.txt`: Lists all required Python packages
+- `README.md`: Project documentation and setup instructions
 
 ## Acknowldgements
 - Built with OpenCV
